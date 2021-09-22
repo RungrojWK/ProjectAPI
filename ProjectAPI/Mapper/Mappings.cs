@@ -3,15 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ProjectAPI.Models;
+using ProjectAPI.Models.Dtos;
 
-namespace ProjectAPI.Models.Mapper
+namespace ProjectAPI.Mapper
 {
     public class Mappings : Profile
     {
         public Mappings()
         {
-            CreateMap<Author, AuthorDto>().ReverseMap();
-            CreateMap<Book, BookDto>().ReverseMap();
+            CreateMap<TMainPolicy, TMainPolicyDto>().ReverseMap();
         }
     }
 }

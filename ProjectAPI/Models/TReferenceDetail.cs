@@ -7,12 +7,9 @@ using System.Collections.Generic;
 
 namespace ProjectAPI.Models
 {
-    public partial class Role
+    public partial class TReferenceDetail
     {
-        public int RoleId { get; set; }
-        public string RoleName { get; set; }
-        public bool? Active { get; set; }
-        public DateTime? CreateDate { get; set; }
-        public DateTime? UpdateDate { get; set; }
+        public string ReferType { get; set; }
+        public string ReferCode { get; set; }
     }
 }

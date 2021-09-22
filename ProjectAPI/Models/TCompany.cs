@@ -7,12 +7,8 @@ using System.Collections.Generic;
 
 namespace ProjectAPI.Models
 {
-    public partial class Role
+    public partial class TCompany
     {
-        public int RoleId { get; set; }
-        public string RoleName { get; set; }
-        public bool? Active { get; set; }
-        public DateTime? CreateDate { get; set; }
-        public DateTime? UpdateDate { get; set; }
+        public short CompanyCode { get; set; }
     }
 }

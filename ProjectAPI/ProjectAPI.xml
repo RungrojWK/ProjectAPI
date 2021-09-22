@@ -4,24 +4,5 @@
         <name>ProjectAPI</name>
     </assembly>
     <members>
-        <member name="M:ProjectAPI.Controllers.AuthorController.GetAuthors">
-            <summary>
-            Get list of bookstores
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:ProjectAPI.Controllers.AuthorController.GetAuthor(System.Int32)">
-            <summary>
-            Get individual author
-            </summary>
-            <param name="authorId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ProjectAPI.Controllers.AuthorV2Controller.GetAuthors">
-            <summary>
-            Get list of bookstores
-            </summary>
-            <returns></returns>
-        </member>
     </members>
 </doc>

@@ -24,6 +24,10 @@ using ProjectAPI.Mapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+using System.Security.Cryptography;
 
 namespace ProjectAPI
 {
@@ -39,7 +43,15 @@ namespace ProjectAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
+
+            services.AddDataProtection()
+                .PersistKeysToFileSystem(new DirectoryInfo(@"C:\Users\rungroj.ULIFE\Downloads\20210916-Upadated_ทดสอบการเข้ารหัสField\key สำหรับทดสอบ\ibsl"))
+                .UseCryptographicAlgorithms(
+                new AuthenticatedEncryptorConfiguration()
+                {
+                    EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+                    ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+                });
             string conStr = this.Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<OIC_IBLS_DEMO_1Context>(option => option.UseSqlServer
                 (conStr));
@@ -55,12 +67,6 @@ namespace ProjectAPI
             services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
             services.AddSwaggerGen();
-
-
-
-
-
-
 
             var appSettingsSection = Configuration.GetSection("AppSettings");
 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectAPI.Models.Dtos;
@@ -18,11 +19,13 @@ namespace ProjectAPI.Controllers
     {
         private IMainPolicyRepository _repo;
         private readonly IMapper _mapper;
+        private readonly IDataProtector _protect;
 
-        public TMainPolicyController(IMainPolicyRepository repo, IMapper mapper)
+        public TMainPolicyController(IMainPolicyRepository repo, IMapper mapper, IDataProtectionProvider provider)
         {
             _repo = repo;
             _mapper = mapper;
+            _protect = provider.CreateProtector("MyIdProtector");
         }
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(List<TMainPolicyDto>))]
@@ -40,7 +43,15 @@ namespace ProjectAPI.Controllers
                 objDto.Add(_mapper.Map<TMainPolicyDto>(obj));
             }
 
-            return Ok(objDto);
+            var output = objDto.Select(e =>
+            {
+                e.PolicyType = _protect.Protect(e.PolicyType.ToString());
+
+                e.PolicyNumber = _protect.Protect(e.PolicyNumber.ToString());
+
+                return e;
+            });
+            return Ok(output);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace ProjectAPI.Repository.IRepository
 {
     public interface IUserRepository
     {
-        bool isUniqeUser(string username);
+        bool IsUniqeUser(string username);
         Users Authenticate(string username, string password);
         Users Register(string username, string password);
     }

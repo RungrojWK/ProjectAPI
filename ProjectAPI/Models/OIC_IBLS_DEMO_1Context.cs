@@ -1,13 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using ProjectAPI.Models;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
 // #nullable disable
 
-namespace ProjectAPI.Data
+namespace ProjectAPI.Models
 {
     public partial class OIC_IBLS_DEMO_1Context : DbContext
     {
@@ -114,25 +113,27 @@ namespace ProjectAPI.Data
 
             modelBuilder.Entity<Users>(entity =>
             {
-                entity.HasKey(e => e.UserId);
-
-                entity.Property(e => e.UserId).ValueGeneratedNever();
+                entity.HasKey(e => e.UserId)
+                    .HasName("PK_Users_1");
 
                 entity.Property(e => e.CreateBy)
                     .HasMaxLength(10)
+                    .IsRequired(false)
                     .IsFixedLength();
 
                 entity.Property(e => e.CreateDate)
-                    .ValueGeneratedOnAdd()
                     .HasMaxLength(50)
+                    .IsRequired(false)
                     .IsUnicode(false);
 
                 entity.Property(e => e.FirstName)
                     .HasMaxLength(50)
+                    .IsRequired(false)
                     .IsUnicode(false);
 
                 entity.Property(e => e.LastName)
                     .HasMaxLength(50)
+                    .IsRequired(false)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Password)
@@ -141,6 +142,7 @@ namespace ProjectAPI.Data
 
                 entity.Property(e => e.UserName)
                     .HasMaxLength(50)
+                    .IsRequired(false)
                     .IsUnicode(false);
             });
 

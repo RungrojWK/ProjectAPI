@@ -21,8 +21,6 @@ using ProjectAPI.Models;
 using ProjectAPI.Repository;
 using ProjectAPI.Repository.IRepository;
 using ProjectAPI.Mapper;
-using ProjectAPI.Data;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -41,6 +39,7 @@ namespace ProjectAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             string conStr = this.Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<OIC_IBLS_DEMO_1Context>(option => option.UseSqlServer
                 (conStr));
@@ -57,11 +56,19 @@ namespace ProjectAPI
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
             services.AddSwaggerGen();
 
-            var appSettingsSection = Configuration.GetSection("AppSetting");
+
+
+
+
+
+
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+
             services.Configure<AppSettings>(appSettingsSection);
 
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
 
             services.AddAuthentication(x =>
             {

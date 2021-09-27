@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
-
-namespace ProjectAPI.Models
+namespace OICIBLSWEB.Models
 {
-    public partial class TMainPolicy
+    public class Policy
     {
         public short CompanyCode { get; set; }
         public string PolicyNumber { get; set; }

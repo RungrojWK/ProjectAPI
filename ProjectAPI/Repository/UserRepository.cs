@@ -7,10 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using ProjectAPI.Data;
 using ProjectAPI.Models;
+using ProjectAPI.Repository.IRepository;
 
-namespace ProjectAPI.Repository.IRepository
+namespace ProjectAPI.Repository
 {
     public class UserRepository : IUserRepository
     {
@@ -35,28 +35,44 @@ namespace ProjectAPI.Repository.IRepository
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.UserId.ToString())
+                    new Claim(ClaimTypes.Name, user.UserId.ToString()),
+                    new Claim(ClaimTypes.Role, user.RoleId.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddHours(24),
                 SigningCredentials = new SigningCredentials
                     (new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             user.Token = tokenHandler.WriteToken(token);
+            user.Password = "";
 
             return user;
         }
 
-
-        public bool isUniqeUser(string username)
+        public bool IsUniqeUser(string username)
         {
-            throw new NotImplementedException();
+            var user = _db.Users.SingleOrDefault(X => X.UserName == username);
+
+            if (user == null)
+                return true;
+
+            return false;
         }
 
         public Users Register(string username, string password)
         {
-            throw new NotImplementedException();
+            Users userObj = new Users()
+            {
+                UserName = username,
+                Password = password
+            };
+
+            _db.Users.Add(userObj);
+            _db.SaveChanges();
+            userObj.Password = "";
+
+            return userObj;
         }
     }
 }

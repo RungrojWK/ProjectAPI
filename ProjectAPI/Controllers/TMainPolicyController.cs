@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectAPI.Models.Dtos;
@@ -26,6 +27,8 @@ namespace ProjectAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(List<TMainPolicyDto>))]
         [ProducesResponseType(400)]
+        [Authorize(Roles = "1")]
+        [ProducesDefaultResponseType]
         public IActionResult GetPolicy()
         {
             var objList = _repo.GetPolicy();

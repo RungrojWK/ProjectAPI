@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectAPI", "ProjectAPI\ProjectAPI.csproj", "{26457AB5-4AF1-4C27-9DA5-57BD61A5CC15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBookStores", "WebBookStores\WebBookStores.csproj", "{ADE916E3-BE08-4F19-A065-70C7731D3CEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OICIBLSWEB", "WebBookStores\OICIBLSWEB.csproj", "{ADE916E3-BE08-4F19-A065-70C7731D3CEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

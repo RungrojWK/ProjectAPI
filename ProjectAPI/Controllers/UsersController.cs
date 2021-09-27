@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using ProjectAPI.Data;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,19 +12,17 @@ using System.Threading.Tasks;
 
 namespace ProjectAPI.Controllers
 {
-    [Authorize]
     [Route("api/v{version:apiVersion}/Users")]
     [ApiController]
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _repo;
-        private readonly IMapper _mapper;
-        public UsersController(IUserRepository repo, IMapper mapper)
+        public UsersController(IUserRepository repo)
         {
             _repo = repo;
-            _mapper = mapper;
         }
-        public IActionResult Authenticate([FromBody] Users model)
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate([FromBody] AuthenticationModel model)
         {
             var user = _repo.Authenticate(model.UserName, model.Password);
             if (user == null)
@@ -31,6 +30,22 @@ namespace ProjectAPI.Controllers
                 return BadRequest(new { message = "Username or password is incorrect" });
             }
             return Ok(user);
+        }
+        [HttpPost("register")]
+        public IActionResult Register([FromBody] AuthenticationModel model)
+        {
+            bool ifUserNameUnique = _repo.IsUniqeUser(model.UserName);
+            if (!ifUserNameUnique)
+            {
+                return BadRequest(new { message = "Username already exists" });
+            }
+            var user = _repo.Register(model.UserName, model.Password);
+            if (user == null)
+            {
+                return BadRequest(new { message = "Error while registering" });
+            }
+
+            return Ok();
         }
     }
 }
